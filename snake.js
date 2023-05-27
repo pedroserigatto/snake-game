@@ -72,6 +72,21 @@ let intervalId = setInterval(gameLoop, intervalTime);
 
 let isPaused = false;
 
+document.addEventListener("keydown", event => {
+    if (event.key === " ") {
+        if (isPaused) {
+            intervalId = setInterval(gameLoop, intervalTime);
+            isPaused = false;
+            document.getElementById("pause-button").textContent = "Pause";
+        } else {
+            clearInterval(intervalId);
+            isPaused = true;
+            document.getElementById("pause-button").textContent = "Resume";
+        }
+        document.getElementById("pause-button").blur();
+    }
+});
+
 document.getElementById("pause-button").addEventListener("click", () => {
     if (isPaused) {
         intervalId = setInterval(gameLoop, intervalTime);
