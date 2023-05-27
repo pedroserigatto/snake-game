@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Snake Game</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #game-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background-color: #eee;
+        }
+
+        #canvas {
+            display: block;
+            margin: 0 auto;
+            border: 0.1em solid black;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #333;
+            box-sizing: border-box;
+            max-width: calc(100vw - 2em);
+            max-height: calc(100vh - 2em);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #score-board {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            padding: 1em;
+            background-color: #eee;
+            border: 0.1em solid black;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #333;
+        }
+
+        #pause-button {
+            position: absolute;
+            top: 1em;
+            right: 1em;
+            padding: 0.5em 1em;
+            background-color: #ccc;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #333;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        #pause-button:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game-container">
+        <canvas id="canvas" width="400" height="400"></canvas>
+        <div id="score-board">
+            <h2>Score</h2>
+            <p id="score">0</p>
+        </div>
+        <button id="pause-button">Pause</button>
+    </div>
+    <script src="snake.js"></script>
+</body>
+
+</html>
