@@ -21,16 +21,18 @@
         #canvas {
             display: block;
             margin: 0 auto;
+            /* margin-top: 160px; */
             border: 0.1em solid black;
             border-radius: 5px;
             box-shadow: 0 0 5px #333;
             box-sizing: border-box;
-            max-width: calc(100vw - 2em);
-            max-height: calc(100vh - 2em);
+            max-width: calc(100% - 2em);
+            max-height: calc(100% - 2em);
             position: absolute;
-            top: 50%;
+            top: 150px;
+            /* top: calc(50% + 150px); */
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, 10%);
         }
 
         #score-board {
@@ -40,18 +42,19 @@
             transform: translateY(-50%);
             padding: 1em;
             background-color: #eee;
-            /* border: 0.1em solid black; */
             border-radius: 5px;
             box-shadow: 0 0 5px #333;
+            max-height: calc(150px - 2em);
+            max-width: calc(200px - 2em);
         }
 
-        @media screen and (max-width: 480px) {
+        @media screen and (max-width: 820px) {
             #score-board {
-                position: static;
-                transform: none;
-                margin: 1em;
+                position: absolute;
+                top: 0em;
+                left: 50%;
+                transform: translateX(-50%);
                 text-align: center;
-                height: auto;
             }
         }
 
@@ -76,11 +79,12 @@
 
 <body>
     <div id="game-container">
-        <canvas id="canvas" width="400" height="400"></canvas>
         <div id="score-board">
-            <h2>Score</h2>
-            <p id="score">0</p>
+            <h3>Score</h2>
+                <p id="score">Score: 0</p>
+                <p id="high-score">Highest Score: 0</p>
         </div>
+        <canvas id="canvas" width="400" height="400"></canvas>
         <button id="pause-button">Pause</button>
     </div>
     <script src="snake.js"></script>

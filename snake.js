@@ -2,9 +2,29 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 let direction = "right";
+let lastDirection = "right";
 let snake = [{ x: 0, y: 0 }];
 let food = { x: 5, y: 5 };
 let score = 0;
+
+const scoreBoardScore = document.getElementById("score");
+const scoreBoardHighScore = document.getElementById("high-score");
+
+// Get the highest score from local storage or set it to 0
+let highestScore = localStorage.getItem("highestScore") || 0;
+
+// Update the score board
+function updateScoreBoard() {
+    scoreBoardScore.textContent = `Score: ${score}`;
+    scoreBoardHighScore.textContent = `Highest Score: ${highestScore}`;
+}
+
+updateScoreBoard();
+
+function generateFood() {
+    food.x = Math.floor(Math.random() * canvas.width / 10);
+    food.y = Math.floor(Math.random() * canvas.height / 10);
+}
 
 function gameLoop() {
     // Move the snake
@@ -28,16 +48,20 @@ function gameLoop() {
     // Check for collision with food
     if (head.x === food.x && head.y === food.y) {
         score++;
-        food.x = Math.floor(Math.random() * canvas.width / 10);
-        food.y = Math.floor(Math.random() * canvas.height / 10);
+        generateFood();
+
+        // Update the highest score if necessary
+        if (score > highestScore) {
+            highestScore = score;
+            localStorage.setItem("highestScore", highestScore);
+        }
 
         // Speed up the game slightly
         clearInterval(intervalId);
         intervalTime -= 5;
         intervalId = setInterval(gameLoop, intervalTime);
 
-        // Update the score display
-        document.getElementById("score").textContent = score;
+        updateScoreBoard();
     } else {
         snake.pop();
     }
@@ -55,7 +79,7 @@ function gameLoop() {
         clearInterval(intervalId);
         window.alert("Game over! Your score is " + score);
     }
-    
+
     // Update the last direction
     lastDirection = direction;
 
@@ -71,21 +95,6 @@ let intervalTime = 100;
 let intervalId = setInterval(gameLoop, intervalTime);
 
 let isPaused = false;
-
-document.addEventListener("keydown", event => {
-    if (event.key === " ") {
-        if (isPaused) {
-            intervalId = setInterval(gameLoop, intervalTime);
-            isPaused = false;
-            document.getElementById("pause-button").textContent = "Pause";
-        } else {
-            clearInterval(intervalId);
-            isPaused = true;
-            document.getElementById("pause-button").textContent = "Resume";
-        }
-        document.getElementById("pause-button").blur();
-    }
-});
 
 document.getElementById("pause-button").addEventListener("click", () => {
     if (isPaused) {
@@ -160,6 +169,18 @@ document.addEventListener("keydown", event => {
             if (lastDirection !== "left") {
                 direction = "right";
             }
+            break;
+        case " ":
+            if (isPaused) {
+                intervalId = setInterval(gameLoop, intervalTime);
+                isPaused = false;
+                document.getElementById("pause-button").textContent = "Pause";
+            } else {
+                clearInterval(intervalId);
+                isPaused = true;
+                document.getElementById("pause-button").textContent = "Resume";
+            }
+            document.getElementById("pause-button").blur();
             break;
     }
 });
